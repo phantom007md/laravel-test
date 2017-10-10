@@ -5,6 +5,9 @@
   <hr>
    <form method="post" action="/posts">
     {{ csrf_field() }}
+
+      @include ('layouts.errors')
+
       <div class="form-group">
         <label for="title">Title</label>
         <input name="title" type="text" class="form-control" id="title" />
