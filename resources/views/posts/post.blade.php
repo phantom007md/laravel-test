@@ -4,6 +4,6 @@
             {{ $post->title }}
         </a>
     </h2>
-    <p class="blog-post-meta"> {{ $post->created_at->toFormattedDateString() }}
-    {{ $post->body }}
+    <p class="blog-post-meta"> {{ $post->created_at->toFormattedDateString() }}</p>
+    <h5>{{ $post->body }}</h5>
   </div>
