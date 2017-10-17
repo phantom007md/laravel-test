@@ -10,4 +10,14 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function user()
+    {
+        return $this->blongsTo(User::class);
+    }
+
+    public function addComment($body)
+    {
+        $this->comments()->create(compact('body'));
+    }
+
 }

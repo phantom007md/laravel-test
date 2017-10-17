@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use illuminate\support\facades\schema;
+use illuminate\database\schema\blueprint;
+use illuminate\database\migrations\migration;
 
-class CreateCommentsTable extends Migration
+class createcommentstable extends migration
 {
     /**
-     * Run the migrations.
+     * run the migrations.
      *
      * @return void
      */
@@ -15,6 +15,7 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('post_id');
             $table->string('body');
             $table->timestamps();
