@@ -37,4 +37,8 @@ class User extends Authenticatable
         return $this->ahsMany(Comment::class);
     }
 
+    public function publish(Post $post)
+    {
+         $this->posts()->save($post);
+    }
 }

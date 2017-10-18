@@ -8,10 +8,22 @@ use App\Post;
 class PostController extends Controller
 {
 
+    function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $posts = Post::latest()->get();
+
+        $archives = Post::selectRaw('year(created_at) as year, monthname(created_at) as month, count(*) published')
+        ->groupBy('year', 'month')
+        ->orderByRaw('min(created_at) desc')
+        ->get()
+        ->toArray();
+
+        return view('posts.index', compact('posts', 'archives'));
     }
 
     public function show(Post $post)
@@ -35,7 +47,9 @@ class PostController extends Controller
                 'body' => 'required'
             ]);
 
-        Post::create(request(['title', 'body']));
+        auth()->user()->publish(
+            new Post(request(['title', 'body']))
+        );
 
         return redirect('/');
     }

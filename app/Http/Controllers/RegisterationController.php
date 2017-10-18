@@ -23,7 +23,7 @@ class RegisterationController extends Controller
      */
     public function create()
     {
-        return view('sessions.create');
+        return view('registeration.create');
     }
 
     /**
@@ -34,19 +34,25 @@ class RegisterationController extends Controller
      */
     public function store()
     {
-
         // validate the data
         $this->validate(
             request(),
-            ['name' => 'required', 'email' => 'required|email', 'password' => 'required']
+            ['name' => 'required', 'email' => 'required|email', 'password' => 'required|confirmed']
         );
         // create and save the user
-        $user = User::create(request(['name','email','password']));
+        $user = User::create(
+            [
+                'name' => request('name'),
+                'email' => request('email'),
+                'password' => bcrypt(request('password'))
+            ]
+        );
 
         // sign in .
         auth()->login($user);
+
         // redirect to a page!
-        redirect()->home();
+        return redirect()->home();
     }
 
     /**

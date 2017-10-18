@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('guest', ['except' => 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +27,7 @@ class SessionController extends Controller
      */
     public function create()
     {
-        //
+        return view('sessions.create');
     }
 
     /**
@@ -32,9 +36,17 @@ class SessionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+
+        if(! auth()->attempt(request(['email', 'password']))){
+            return back()->withErrors(
+                ['message' => 'please check your cridentials and try again']
+            );
+        };
+
+        return redirect()->home();
+
     }
 
     /**
@@ -77,8 +89,10 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+
+        return redirect()->home();
     }
 }

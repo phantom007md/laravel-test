@@ -21,6 +21,7 @@ Route::post('/posts/{post}/comments', 'CommentController@store');
 
 Route::get('/register', 'RegisterationController@create');
 Route::post('/register', 'RegisterationController@store');
+
 Route::get('/login', 'SessionController@create');
-
-
+Route::post('/login', 'SessionController@store');
+Route::get('/logout', 'SessionController@destroy');
